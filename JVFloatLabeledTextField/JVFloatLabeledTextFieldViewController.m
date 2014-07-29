@@ -63,14 +63,14 @@ const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
     
     topOffset = [[UIApplication sharedApplication] statusBarFrame].size.height + self.navigationController.navigationBar.frame.size.height;
 #endif
-    
+    UIFont *labelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
     UIColor *floatingLabelColor = [UIColor grayColor];
     
     JVFloatLabeledTextField *titleField = [[JVFloatLabeledTextField alloc] initWithFrame:
                                            CGRectMake(kJVFieldHMargin, topOffset, self.view.frame.size.width - 2 * kJVFieldHMargin, kJVFieldHeight)];
     titleField.placeholder = NSLocalizedString(@"Title", @"");
     titleField.font = [UIFont systemFontOfSize:kJVFieldFontSize];
-    titleField.floatingLabel.font = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
+    titleField.floatingLabelFont = labelFont;
     titleField.floatingLabelTextColor = floatingLabelColor;
     titleField.clearButtonMode = UITextFieldViewModeWhileEditing;
     titleField.floatingLabelYPadding = @-5;
@@ -93,6 +93,7 @@ const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
     priceField.floatingLabel.font = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     priceField.floatingLabelTextColor = floatingLabelColor;
     [self.view addSubview:priceField];
+    priceField.tintColor = [UIColor redColor];
     
     UIView *div2 = [UIView new];
     div2.frame = CGRectMake(kJVFieldHMargin + priceField.frame.size.width,
