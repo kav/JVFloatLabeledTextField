@@ -73,6 +73,8 @@ const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
     titleField.floatingLabel.font = [UIFont boldSystemFontOfSize:kJVFieldFloatingLabelFontSize];
     titleField.floatingLabelTextColor = floatingLabelColor;
     titleField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    titleField.floatingLabelYPadding = @-5;
+    titleField.tintColor = [UIColor grayColor];
 //    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 30.0f, 30.0f)];
 //    titleField.leftView = leftView;
 //    titleField.leftViewMode = UITextFieldViewModeAlways;
@@ -81,7 +83,7 @@ const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
     UIView *div1 = [UIView new];
     div1.frame = CGRectMake(kJVFieldHMargin, titleField.frame.origin.y + titleField.frame.size.height,
                             self.view.frame.size.width - 2 * kJVFieldHMargin, 1.0f);
-    div1.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
+//    div1.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
     [self.view addSubview:div1];
     
     JVFloatLabeledTextField *priceField = [[JVFloatLabeledTextField alloc] initWithFrame:
@@ -96,7 +98,7 @@ const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
     div2.frame = CGRectMake(kJVFieldHMargin + priceField.frame.size.width,
                             titleField.frame.origin.y + titleField.frame.size.height,
                             1.0f, kJVFieldHeight);
-    div2.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
+//    div2.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
     [self.view addSubview:div2];
     
     JVFloatLabeledTextField *locationField = [[JVFloatLabeledTextField alloc] initWithFrame:
@@ -113,7 +115,7 @@ const static CGFloat kJVFieldFloatingLabelFontSize = 11.0f;
     UIView *div3 = [UIView new];
     div3.frame = CGRectMake(kJVFieldHMargin, priceField.frame.origin.y + priceField.frame.size.height,
                             self.view.frame.size.width - 2*kJVFieldHMargin, 1.0f);
-    div3.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
+//    div3.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3f];
     [self.view addSubview:div3];
     
     JVFloatLabeledTextView *descriptionField = [[JVFloatLabeledTextView alloc] initWithFrame:CGRectZero];
