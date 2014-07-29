@@ -60,7 +60,6 @@
 {
     _floatingLabel = [UILabel new];
     _floatingLabel.alpha = 0.0f;
-    [self addSubview:_floatingLabel];
 	
     // some basic default fonts/colors
     _floatingLabel.font = [UIFont boldSystemFontOfSize:12.0f];
@@ -70,12 +69,18 @@
     _floatingLabelShowAnimationDuration = kFloatingLabelShowAnimationDuration;
     _floatingLabelHideAnimationDuration = kFloatingLabelHideAnimationDuration;
     
-    self.borderStyle = UITextBorderStyleLine;
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.borderWidth = 1;
-    
     self.clipsToBounds = NO;
-    self.layer.bounds = UIEdgeInsetsInsetRect([super textRectForBounds:self.bounds], UIEdgeInsetsMake(ceilf(_floatingLabel.font.lineHeight+_floatingLabelYPadding.floatValue), 0.0f, 0.0f, 0.0f));
+    self.layer.bounds = UIEdgeInsetsInsetRect([super textRectForBounds:self.bounds], UIEdgeInsetsMake(ceilf(_floatingLabel.font.lineHeight+_floatingLabelYPadding.floatValue)/2, 0, 0.0f, 0.0f));
+    
+    _borderLayer = [[CALayer alloc] initWithLayer:self.layer];
+    _borderLayer.frame = self.layer.bounds;
+    _borderLayer.borderColor = _floatingLabelTextColor.CGColor;
+    _borderLayer.borderWidth = .5f;
+
+    [self.layer addSublayer:_borderLayer];
+
+    [self addSubview:_floatingLabel];
+
 }
 
 #pragma mark -
@@ -193,27 +198,12 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
-    return UIEdgeInsetsInsetRect([super textRectForBounds:bounds], UIEdgeInsetsMake(ceilf(_floatingLabel.font.lineHeight+_floatingLabelYPadding.floatValue), 5.0f, 0.0f, 0.0f));
+    return UIEdgeInsetsInsetRect([super textRectForBounds:bounds], UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f));
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds
 {
-    return UIEdgeInsetsInsetRect([super editingRectForBounds:bounds], UIEdgeInsetsMake(ceilf(_floatingLabel.font.lineHeight+_floatingLabelYPadding.floatValue), 5.0f, 0.0f, 0.0f));
-}
-
-- (CGRect)clearButtonRectForBounds:(CGRect)bounds
-{
-    CGRect rect = [super clearButtonRectForBounds:bounds];
-    rect = CGRectMake(rect.origin.x, rect.origin.y + (_floatingLabel.font.lineHeight / 2.0) + (_floatingLabelYPadding.floatValue / 2.0f), rect.size.width, rect.size.height);
-    return rect;
-}
--(void)drawRect:(CGRect)rect{
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGRect myFrame = UIEdgeInsetsInsetRect([super textRectForBounds:rect], UIEdgeInsetsMake(ceilf(_floatingLabel.font.lineHeight+_floatingLabelYPadding.floatValue), 0.0f, 0.0f, 0.0f));
-//    CGContextSetLineWidth(context, 1);
-//    CGRectInset(myFrame, 0, 0);
-//    [[self getLabelActiveColor] set];
-//    UIRectFrame(myFrame);
+    return UIEdgeInsetsInsetRect([super textRectForBounds:bounds], UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f));
 }
 
 - (void)setTextAlignment:(NSTextAlignment)textAlignment
@@ -234,13 +224,14 @@
     }
     
     BOOL firstResponder = self.isFirstResponder;
-    _floatingLabel.textColor = (firstResponder && self.text && self.text.length > 0 ? self.getLabelActiveColor : self.floatingLabelTextColor);
+    _floatingLabel.textColor = (firstResponder ? self.getLabelActiveColor : self.floatingLabelTextColor);
     if (!self.text || 0 == [self.text length]) {
         [self hideFloatingLabel:firstResponder];
     }
     else {
         [self showFloatingLabel:firstResponder];
     }
+    _borderLayer.borderColor = _floatingLabel.textColor.CGColor;
 }
 
 #pragma mark - Accessibility
